@@ -9,7 +9,7 @@
 npm start
 ```
 * Step 3: Subscribe to result entity (Change in subscribe.sh notify url)
-```hell
+```shell
 ./subscribe.sh
 ```
 * Step 4: Open browser in localhost:8080.
