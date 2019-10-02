@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>FIWARE Purchase volume prediction</title>
+	<script src="socket.io.js"></script>
+	<script src="jquery-1.10.1.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="bootstrap.min.css"></link>
+	<link rel="stylesheet" href="basic.css"></link>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+	<div class="container">
+	<img id="logo" src="fi-ware_logo.png">
+		<h1>Predict the number of purchases</h1>
+	  	<div class="row">
+	      <div class="col-6">
+	      		<h2>Date</h2>
+			  	<div id="datepicker"></div>	
+	      </div>
+	      <div class="col-6">
+			<form id="newForm">
+			  <input type="hidden" name="date" id="date">
+			  <h2>Hour range</h2>
+			  <div class="form-group">
+			      <select class="form-control" id="hourSelect">
+			        <option value="0">00:00-00:59</option>
+			        <option value="1">01:00-01:59</option>
+			        <option value="2">02:00-02:59</option>
+			        <option value="3">03:00-03:59</option>
+			        <option value="4">04:00-04:59</option>
+			        <option value="5">05:00-05:59</option>
+			        <option value="6">06:00-06:59</option>
+			        <option value="7">07:00-07:59</option>
+			        <option value="8">08:00-08:59</option>
+			        <option value="9">09:00-09:59</option>
+			        <option value="10">10:00-10:59</option>
+			        <option value="11">11:00-11:59</option>
+			        <option value="12">12:00-12:59</option>
+			        <option value="13">13:00-13:59</option>
+			        <option value="14">14:00-14:59</option>
+			        <option value="15">15:00-15:59</option>
+			        <option value="16">16:00-16:59</option>
+			        <option value="17">17:00-17:59</option>
+			        <option value="18">18:00-18:59</option>
+			        <option value="19">19:00-19:59</option>
+			        <option value="20">20:00-20:59</option>
+			        <option value="21">21:00-21:59</option>
+			        <option value="22">22:00-22:59</option>
+			        <option value="23">23:00-23:59</option>
+			      </select>
+			    </div>
+			  <button type="submit" class="btn btn-primary">Submit</button>
+			  <br/>
+			  <br/>
+			  <div id="messages"></div>
+
+			</form>
+	      </div>
+      	</div>
+	</div>
+	<br/><br/>
+	<script src="/predict.js"></script>
+</body>
+
+</html>

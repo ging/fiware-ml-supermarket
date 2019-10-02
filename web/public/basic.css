@@ -1,0 +1,111 @@
+
+body {
+	font-family: 'Roboto', sans-serif;
+    color: #333;
+    --mainpurple: #232951;
+    --darkerpurple: #161938;
+    --textpurple: #656683;
+    --bckg: #2A2A52;
+    --brightgreen: #48C18E;
+    --brightyellow: #FAC855;
+    --brightblue: #36A2EB;
+    --brightorange: #F3945E;
+    --blue: #7FC4D1;
+    --lightred: #F47E84;
+    --textgrey: #a1a3af;
+    --purpleedit: #9091A6;
+    --primary: #183168;
+}
+
+
+#messages {
+}
+
+#logo {
+	width: 250px;
+}
+
+#hourSelect{
+	font-size: 1.5em;
+}
+
+.btn-primary {
+	background: var(--blue);
+	box-shadow: none;
+	-webkit-box-shadow: none;
+}
+.btn-primary:hover, .btn-primary:active:hover, .btn-primary:focus {
+    background: var(--blue);
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+#datepicker .ui-datepicker-inline.ui-datepicker {
+    width: 35em;
+    padding-left: 75px;
+    padding-right: 75px;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    line-height: 30px;
+    border-color: #ddd;
+}
+
+#datepicker .ui-datepicker-inline.ui-datepicker th {
+    color: #333;
+}
+
+#datepicker .ui-datepicker-inline.ui-datepicker th:nth-child(6), #datepicker .ui-datepicker-inline.ui-datepicker th:nth-child(7) {
+    color: var(--lightred);
+}
+
+#datepicker .ui-datepicker-inline.ui-datepicker * {
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+}
+
+#datepicker .ui-datepicker-inline.ui-datepicker td, #datepicker .ui-datepicker-inline.ui-datepicker a {
+    color: #92A3AB;
+    text-align: center;
+    font-weight: bold;
+}
+
+#datepicker .ui-datepicker-inline.ui-datepicker td.turn-day-highlight .ui-state-default, #datepicker .ui-datepicker-inline.ui-datepicker a.turn-day-highlight .ui-state-default {
+    color: var(--blue);
+    background-color: var(--brightyellow);
+    border-radius: 50%;
+    color: black;
+}
+
+#datepicker .ui-datepicker-inline.ui-datepicker .ui-datepicker-header.ui-widget-header {
+    background-color: white;
+    border-color: white;
+}
+
+#datepicker .ui-datepicker-inline.ui-datepicker .ui-datepicker-header .ui-datepicker-title span {
+    font-size: 20px;
+}
+
+#datepicker .ui-datepicker-inline.ui-datepicker .ui-state-default {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+#datepicker .ui-datepicker-inline.ui-datepicker .ui-state-highlight:not(.ui-state-active) {
+    color: var(--lightred);
+}
+
+#datepicker .ui-datepicker-inline.ui-datepicker .ui-state-active {
+    background-color: var(--blue) !important;
+    border-radius: 50%;
+    color: white;
+}
+
+#result-container {
+    text-align: center;
+}
+#purchases {
+    font-size: 40px;
+}
+#result {
+    font-weight: 800;
+    font-size: 65px;
+}
