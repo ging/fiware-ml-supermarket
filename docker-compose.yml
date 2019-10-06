@@ -1,0 +1,37 @@
+version: "3.7"
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:3.4
+    command: --nojournal
+    networks:
+      - fiware
+  orion:
+    container_name: orion
+    image: fiware/orion
+    links:
+      - mongo
+    ports:
+      - "1026:1026"
+    command: -dbhost mongo
+    networks:
+      - fiware
+      - dockernet
+  web:
+    container_name: web
+    build:
+      context: ./web
+    ports:
+      - "8080:8080"
+    networks:
+      - fiware
+    environment:
+      - URL_CB=http://orion:1026/v2/entities/ReqTicketPrediction1/attrs
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+networks:
+  fiware:
+  dockernet:
+    external: true

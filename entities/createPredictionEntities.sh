@@ -24,9 +24,9 @@ curl localhost:1026/v2/entities -s -S -H 'Content-Type: application/json' -d @- 
   },
   "time": {
     "value": 0,
-    "type": "String"
+    "type": "Integer"
   },
-  "weekDay:": {
+  "weekDay": {
     "value": 0,
     "type": "Integer"
   }

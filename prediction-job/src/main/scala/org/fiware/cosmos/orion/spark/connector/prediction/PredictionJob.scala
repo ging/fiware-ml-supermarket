@@ -1,15 +1,10 @@
 package org.fiware.cosmos.orion.spark.connector.prediction
 
-import org.apache.spark.ml.Pipeline
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.fiware.cosmos.orion.spark.connector.{ContentType, HTTPMethod, OrionReceiver, OrionSink, OrionSinkObject}
-import org.apache.spark.ml.classification.RandomForestClassificationModel
-import org.apache.spark.ml.feature.{VectorAssembler, VectorIndexer}
-import org.apache.spark.ml.regression.{RandomForestRegressionModel, RandomForestRegressor}
-import org.apache.spark.rdd.RDD
+import org.apache.spark.ml.feature.{VectorAssembler}
+import org.apache.spark.ml.regression.{RandomForestRegressionModel}
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.api.r.SQLUtils
-import org.apache.spark.sql.types.{DoubleType, IntegerType, StringType, StructField, StructType}
 
 
 /**
@@ -19,17 +14,17 @@ import org.apache.spark.sql.types.{DoubleType, IntegerType, StringType, StructFi
 
 case class PredictionResponse(socketId: String, predictionId: String, predictionValue: Int) {
   override def toString :String = s"""{
-  "socketId": "${socketId}",
-  "predictionId": "${predictionId}",
-  "predictionValue": ${predictionValue}
+  "socketId": { "value": "${socketId}", "type": "String"},
+  "predictionId": { "value":"${predictionId}", "type": "String"},
+  "predictionValue": { "value":${predictionValue}, "type": "Integer"}
   }""".trim()
 }
 case class PredictionRequest(year: Int, month: Int, day: Int, weekDay: Int, time: Int, socketId: String, predictionId: String)
 
 object PredictionJob {
-  final val URL_CB = "http://localhost:1026/v2/entities/ResPrediction1/attrs"
+  final val URL_CB = "http://localhost:1026/v2/entities/ResTicketPrediction1/attrs"
   final val CONTENT_TYPE = ContentType.JSON
-  final val METHOD = HTTPMethod.POST
+  final val METHOD = HTTPMethod.PATCH
   final val BASE_PATH = "./"
 
   def main(args: Array[String]): Unit = {
@@ -39,6 +34,7 @@ object PredictionJob {
       .master("local[*]")
       .getOrCreate()
     import spark.implicits._
+    spark.sparkContext.setLogLevel("WARN")
 
     val ssc = new StreamingContext(spark.sparkContext, Seconds(1))
     // ssc.checkpoint("./output")

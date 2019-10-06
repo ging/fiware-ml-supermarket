@@ -2,6 +2,11 @@ const {$} = window;
 let predictionId = Date.now();
 $(function () {
 	var socket = io.connect('http://localhost:8080', { 'forceNew': true });
+	function renderSpinner(){
+		var html = `<img src="spinner.gif" className="spinner"/>`;
+		document.getElementById('messages').innerHTML = html;
+
+	}
 	function renderAlert(data, type = "primary") {
 		var html =  `<div class="alert alert-dismissible alert-${type}">
 		  <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -11,33 +16,39 @@ $(function () {
 	}
 
 	function renderResult(data) {
-		var html =  `<div id="result-container"><div id="result">0</div><div id="purchases">purchases</div></div>` ;
+		var html =  `<div id="result-container">
+			<div id="result">0</div>
+			<div id="purchases">purchases</div>
+		</div>` ;
 		document.getElementById('messages').innerHTML = html;
 		let countdown = 0;
 		let interval = setInterval(()=>{
 			if (countdown < data){
 				countdown++;
-				document.getElementById('messages').innerHTML = `<div id="result-container"><div id="result">${countdown}</div><div id="purchases">purchases</div></div>`;
+				document.getElementById('messages').innerHTML = `<div id="result-container">
+					<div id="result">${countdown}</div>
+					<div id="purchases">purchases</div>
+				</div>`;
 			} else {
 				interval = null;
 			}
 		}, 10);
-		interval
 		$('#result');
 	}
 
 	socket.on('messages', function(action) {
+		console.log(action)
 		try{
 			switch(action.type) {
 				case "CONFIRMATION":
-					renderAlert(action.payload.msg, "info")
+					renderSpinner();
 					break;
 				case "ERROR":
-					renderAlert(action.payload.msg, "danger")
+					renderAlert(action.payload.msg, "danger");
 					break;
 				case "PREDICTION":
-					if (predictionId === action.payload.predictionId) {
-						renderResult(action.payload.predictionValue)
+					if (predictionId == action.payload.predictionId) {
+						renderResult(action.payload.predictionValue);
 					}
 					break;
 				default:

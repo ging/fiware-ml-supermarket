@@ -4,22 +4,34 @@ curl -v localhost:1026/v2/subscriptions -s -S -H 'Content-Type: application/json
   "subject": {
 	"entities": [
   	{
-    	"id": "ResTicketPrediction1",
-    	"type": "ResTicketPrediction"
+    	"id": "ReqTicketPrediction1",
+    	"type": "ReqTicketPrediction"
   	}
 	],
 	"condition": {
   	"attrs": [
-    	"*"
+      "predictionId",
+      "socketId",
+      "year",
+      "month",
+      "day",
+      "time",
+      "weekDay"
   	]
 	}
   },
   "notification": {
 	"http": {
-  	"url": "http://localhost:8080/notify"
+  	"url": "http://172.17.0.1:9001"
 	},
 	"attrs": [
-  	"*"
+      "predictionId",
+      "socketId",
+      "year",
+      "month",
+      "day",
+      "time",
+      "weekDay"
 	]
   },
   "expires": "2040-01-01T14:00:00.00Z",

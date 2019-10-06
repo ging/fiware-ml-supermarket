@@ -109,3 +109,6 @@ body {
     font-weight: 800;
     font-size: 65px;
 }
+#spinner {
+    filter: saturate(0.25);
+}
