@@ -4,10 +4,12 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var bodyParser = require('body-parser')
 var fetch = require('node-fetch');
+const URL_CB = "http://localhost:1026/v2/entities/ReqTicketPrediction1/attrs";
+// const URL_CB = "http://localhost:9001"
 
 const updateEntity = (data) => {
 	console.log(data)
-	fetch("http://localhost:1026/v2/entities/ReqTicketPrediction1/attrs", {
+	fetch(URL_CB, {
 		body: JSON.stringify(data),
 		headers: {
 			"Content-Type": "application/json"
@@ -26,13 +28,15 @@ const updateEntity = (data) => {
 }
 
 server.listen(8080, function() {
+	console.log("Listening on port 8080")
 });
 
 
 io.on('connection', function(socket) {
 	console.log('New connection');
 	socket.on('predict',(msg)=>{
-		updateEntity({...msg, socketId: socket.id})
+		const { year, month, day, weekDay, time, predictionId } = msg;
+		updateEntity({ year, month, day, weekDay, time, predictionId, socketId: socket.id });
 	})
 });
 
