@@ -4,9 +4,8 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var bodyParser = require('body-parser')
 var fetch = require('node-fetch');
-const URL_CB = "http://localhost:1026/v2/entities/ReqTicketPrediction1/attrs";
-// const URL_CB = "http://localhost:9001"
-
+const URL_CB = process.env.URL_CB || "http://localhost:9001"
+console.log("CB URL: "+ URL_CB)
 const updateEntity = (data) => {
 	console.log(data)
 	fetch(URL_CB, {
