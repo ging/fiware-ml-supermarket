@@ -37,3 +37,8 @@ sh entities/subscribeResPredictionTicket.sh
 ```shell
 sh entities/subscribeReqPredictionTicket.sh
 ```
+* Open browser in http://localhost:8080
+
+* Select a date and time range
+
+* Predict!
