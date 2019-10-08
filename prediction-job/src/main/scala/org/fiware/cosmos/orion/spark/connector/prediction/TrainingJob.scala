@@ -9,7 +9,7 @@ import org.apache.spark.sql.types.{IntegerType, StructField, StructType}
 
 object TrainingJob {
   def main(args: Array[String]): Unit = {
-    train().write.overwrite().save("./model")
+    train().write.overwrite().save("/prediction-job/model")
 
   }
   def train(): RandomForestRegressionModel = {
@@ -35,7 +35,7 @@ object TrainingJob {
       .option("header", "true")
       .option("delimiter", ",")
       .option("inferschema", "true")
-      .load("carrefour_data.csv")
+      .load("/prediction-job/carrefour_data.csv")
       .drop("id")
       .drop("date")
         .withColumnRenamed("items","label")

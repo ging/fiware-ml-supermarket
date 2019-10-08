@@ -5,7 +5,7 @@ var io = require('socket.io')(server);
 var bodyParser = require('body-parser');
 var fetch = require('node-fetch');
 const URL_CB = process.env.URL_CB || "http://localhost:9001";
-const PORT = process.env.PORT  ? parseInt(process.env.port) : 8080;
+const PORT = process.env.PORT  ? (process.env.PORT) : 3000;
 console.log("Orion URL: "+ URL_CB);
 
 const createAttr = (attr) => {
@@ -22,8 +22,8 @@ const updateEntity = (data) => {
 		method: "PATCH"
 	})
 	.then(res=> {
+		console.log("Reply from Orion", res.ok)
 		if (res.ok) {
-			console.log()
 			io.to(data.socketId.value).emit("messages",{type: "CONFIRMATION", payload:{ msg: "Your request is being processed"}});
 			return;
 		} 
@@ -73,5 +73,5 @@ app.post("/notify",function(req,res){
 				predictionValue: predictionValue.value}});
 		})
 	}
-	res.send(200);
+	res.sendStatus(200);
 });

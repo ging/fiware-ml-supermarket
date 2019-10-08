@@ -22,10 +22,10 @@ case class PredictionResponse(socketId: String, predictionId: String, prediction
 case class PredictionRequest(year: Int, month: Int, day: Int, weekDay: Int, time: Int, socketId: String, predictionId: String)
 
 object PredictionJob {
-  final val URL_CB = "http://localhost:1026/v2/entities/ResTicketPrediction1/attrs"
+  final val URL_CB = "http://orion:1026/v2/entities/ResTicketPrediction1/attrs"
   final val CONTENT_TYPE = ContentType.JSON
   final val METHOD = HTTPMethod.PATCH
-  final val BASE_PATH = "./"
+  final val BASE_PATH = "./prediction-job"
 
   def main(args: Array[String]): Unit = {
     val spark = SparkSession
@@ -48,7 +48,7 @@ object PredictionJob {
 
     // Load model
     // val randomForestModelPath = "%s/models/spark_random_forest_classifier.flight_delays.5.0.bin".format(BASE_PATH)
-    val model = RandomForestRegressionModel.load("./model")
+    val model = RandomForestRegressionModel.load(BASE_PATH+"/model")
 
     // Create Orion Source. Receive notifications on port 9001
     val eventStream = ssc.receiverStream(new OrionReceiver(9001))

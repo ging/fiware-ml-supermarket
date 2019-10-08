@@ -1,4 +1,4 @@
-curl localhost:1026/v2/entities -s -S -H 'Content-Type: application/json' -d @- <<EOF
+curl orion:1026/v2/entities -s -S -H 'Content-Type: application/json' -d @- <<EOF
 {
   "id": "ReqTicketPrediction1",
   "type": "ReqTicketPrediction",
@@ -36,7 +36,7 @@ EOF
 
 
 
-curl localhost:1026/v2/entities -s -S -H 'Content-Type: application/json' -d @- <<EOF
+curl orion:1026/v2/entities -s -S -H 'Content-Type: application/json' -d @- <<EOF
 {
   "id": "ResTicketPrediction1",
   "type": "ResTicketPrediction",

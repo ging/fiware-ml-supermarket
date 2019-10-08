@@ -1,4 +1,4 @@
-curl -v localhost:1026/v2/subscriptions -s -S -H 'Content-Type: application/json' -d @- <<EOF
+curl -v orion:1026/v2/subscriptions -s -S -H 'Content-Type: application/json' -d @- <<EOF
 {
   "description": "A subscription to get ticket predictions",
   "subject": {
@@ -22,7 +22,7 @@ curl -v localhost:1026/v2/subscriptions -s -S -H 'Content-Type: application/json
   },
   "notification": {
 	"http": {
-  	"url": "http://172.17.0.1:9001"
+  	"url": "http://spark-master:9001"
 	},
 	"attrs": [
       "predictionId",

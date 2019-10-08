@@ -1,7 +1,7 @@
 const {$} = window;
 let predictionId = Date.now();
 $(function () {
-	var socket = io.connect('http://localhost:8080', { 'forceNew': true });
+	var socket = io.connect('/', { 'forceNew': true });
 	function renderSpinner(){
 		var html = `<img src="spinner.gif" className="spinner"/>`;
 		document.getElementById('messages').innerHTML = html;
@@ -37,7 +37,7 @@ $(function () {
 	}
 
 	socket.on('messages', function(action) {
-		console.log(action)
+		console.log(action);
 		try{
 			switch(action.type) {
 				case "CONFIRMATION":
@@ -47,7 +47,7 @@ $(function () {
 					renderAlert(action.payload.msg, "danger");
 					break;
 				case "PREDICTION":
-					if (predictionId == action.payload.predictionId) {
+					if (predictionId === ( "p-" + action.payload.predictionId)) {
 						renderResult(action.payload.predictionValue);
 					}
 					break;
@@ -110,7 +110,7 @@ $(function () {
         	day: dateSubmitted.getUTCDate()+1,
         	weekDay: dateSubmitted.getDay(),
         	time: time,
-        	predictionId: predictionId
+        	predictionId: "p-"+ predictionId
         }
         socket.emit("predict",msg)
         return false;

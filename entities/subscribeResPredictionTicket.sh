@@ -1,4 +1,4 @@
-curl -v localhost:1026/v2/subscriptions -s -S -H 'Content-Type: application/json' -d @- <<EOF
+curl -v orion:1026/v2/subscriptions -s -S -H 'Content-Type: application/json' -d @- <<EOF
 {
   "description": "A subscription to get ticket predictions",
   "subject": {
@@ -18,7 +18,7 @@ curl -v localhost:1026/v2/subscriptions -s -S -H 'Content-Type: application/json
   },
   "notification": {
 	"http": {
-  	"url": "http://web:8080/notify"
+  	"url": "http://web:3000/notify"
 	},
 	"attrs": [
       "predictionId",

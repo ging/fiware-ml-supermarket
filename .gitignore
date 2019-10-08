@@ -3,3 +3,4 @@ prediction-job/model/*
 prediction-job/.idea
 web/node_modules/*
 web/.env
+maven/docker/prediction-job/*
