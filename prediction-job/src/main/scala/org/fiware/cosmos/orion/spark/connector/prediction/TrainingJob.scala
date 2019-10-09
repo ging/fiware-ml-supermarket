@@ -5,21 +5,23 @@ import org.apache.spark.ml.evaluation.RegressionEvaluator
 import org.apache.spark.ml.feature.{VectorAssembler, VectorIndexer}
 import org.apache.spark.ml.regression._
 import org.apache.spark.sql.{DataFrame, SparkSession}
-import org.apache.spark.sql.types.{IntegerType, StructField, StructType}
+import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
 
 object TrainingJob {
   def main(args: Array[String]): Unit = {
-    train().write.overwrite().save("/prediction-job/model")
+    train().write.overwrite().save("./prediction-job/model")
 
   }
   def train(): RandomForestRegressionModel = {
     val schema = StructType(
-      Array(StructField("year", IntegerType),
-        StructField("month", IntegerType),
-        StructField("day", IntegerType),
-        StructField("weekDay", IntegerType),
+      Array(StructField("id", IntegerType),
+        StructField("date", StringType),
         StructField("time", IntegerType),
-        StructField("items", IntegerType)
+        StructField("items", IntegerType),
+        StructField("day", IntegerType),
+        StructField("month", IntegerType),
+        StructField("year", IntegerType),
+        StructField("weekDay", IntegerType)
       ))
 
     val spark = SparkSession
@@ -32,10 +34,10 @@ object TrainingJob {
 
     // Load and parse the data file, converting it to a DataFrame.
     val data = spark.read.format("csv")
+      .schema(schema)
       .option("header", "true")
       .option("delimiter", ",")
-      .option("inferschema", "true")
-      .load("/prediction-job/carrefour_data.csv")
+      .load("./prediction-job/carrefour_data.csv")
       .drop("id")
       .drop("date")
         .withColumnRenamed("items","label")
@@ -52,6 +54,9 @@ object TrainingJob {
     // Train a RandomForest model.
     val rf = new RandomForestRegressor()
       .setLabelCol("label")
+      .setMaxDepth(3)
+      .setNumTrees(20)
+      .setFeatureSubsetStrategy("auto")
 //      .setFeaturesCol("indexedFeatures")
 
     // Chain indexer and forest in a Pipeline.
@@ -70,8 +75,12 @@ object TrainingJob {
       .setLabelCol("label")
       .setPredictionCol("prediction")
       .setMetricName("rmse")
+    val rmse = evaluator.evaluate(predictions)
+    println("Root Mean Squared Error (RMSE) on test data = " + rmse)
+
 
     val rfModel = model.stages(0).asInstanceOf[RandomForestRegressionModel]
+    println("Learned regression forest model:\n" + rfModel.toDebugString)
     rfModel
   }
 }

@@ -45,7 +45,7 @@ services:
       - "constraint:node==spark-master"
     networks:
          - fiware
-    command: bash -c "sleep 8 && sh /prediction-job/train-spark.sh"
+    command: bash -c "sleep 8 && sh /prediction-job/run-spark-jobs.sh"
     volumes:
       - ./prediction-job:/prediction-job
 
