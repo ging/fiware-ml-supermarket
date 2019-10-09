@@ -39,36 +39,41 @@ object TrainingJob {
       .option("delimiter", ",")
       .load("./prediction-job/carrefour_data.csv")
       .drop("id")
-      .drop("date")
-        .withColumnRenamed("items","label")
-      val assembler = new VectorAssembler()
-        .setInputCols(Array("year", "month", "day", "time", "weekDay"))
+      .withColumnRenamed("items","label")
+
+    val assembler = new VectorAssembler()
+        .setInputCols(Array("year", "month", "day", "weekDay","time" ))
         .setOutputCol("features")
 
     // Automatically identify categorical features, and index them.
     var df2 = assembler.transform(data)
 
     // Split the data into training and test sets (30% held out for testing).
-    val Array(trainingData, testData) = df2.randomSplit(Array(0.7, 0.3))
+    val Array(trainingData, testData) = df2.randomSplit(Array(0.8, 0.2))
 
     // Train a RandomForest model.
     val rf = new RandomForestRegressor()
       .setLabelCol("label")
-      .setMaxDepth(3)
-      .setNumTrees(20)
-      .setFeatureSubsetStrategy("auto")
+      .setFeaturesCol("features")
+      .setMaxDepth(30)
+      .setMaxBins(32)
+      .setNumTrees(100)
 //      .setFeaturesCol("indexedFeatures")
+    val featureIndexer = new VectorIndexer()
+      .setInputCol("features")
+      .setOutputCol("indexedFeatures")
+      .fit(df2)
 
     // Chain indexer and forest in a Pipeline.
     val pipeline = new Pipeline()
-    .setStages(Array( rf))
+    .setStages(Array(featureIndexer, rf))
     // Train model. This also runs the indexer.
     val model = pipeline.fit(trainingData)
     // Make predictions.
     val predictions = model.transform(testData)
 
     // Select example rows to display.
-      // predictions.select("prediction", "label", "features").show(5)
+    predictions.select("prediction", "label", "features").show(5)
 
     // Select (prediction, true label) and compute test error.
     val evaluator = new RegressionEvaluator()
@@ -79,7 +84,7 @@ object TrainingJob {
     println("Root Mean Squared Error (RMSE) on test data = " + rmse)
 
 
-    val rfModel = model.stages(0).asInstanceOf[RandomForestRegressionModel]
+    val rfModel = model.stages(1).asInstanceOf[RandomForestRegressionModel]
     println("Learned regression forest model:\n" + rfModel.toDebugString)
     rfModel
   }
