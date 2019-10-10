@@ -32,6 +32,7 @@ services:
     command: bash -c "sh /entities/createPredictionEntities.sh && sh /entities/subscribeReqPredictionTicket.sh && sh /entities/subscribeResPredictionTicket.sh && npm start"
     environment:
       - URL_CB=http://orion:1026/v2/entities/ReqTicketPrediction1/attrs
+      - MONGO_URI=mongodb://root:example@mongo:27017/sth_test
     volumes:
       - ./entities:/entities
   spark-master:
