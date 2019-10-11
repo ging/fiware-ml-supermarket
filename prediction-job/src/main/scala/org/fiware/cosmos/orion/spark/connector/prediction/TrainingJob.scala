@@ -31,6 +31,7 @@ object TrainingJob {
       .getOrCreate()
     import spark.implicits._
 
+    spark.sparkContext.setLogLevel("WARN")
 
     // Load and parse the data file, converting it to a DataFrame.
     val data = spark.read.format("csv")
@@ -46,10 +47,10 @@ object TrainingJob {
         .setOutputCol("features")
 
     // Automatically identify categorical features, and index them.
-    var df2 = assembler.transform(data)
+    var transformedDf = assembler.transform(data)
 
     // Split the data into training and test sets (30% held out for testing).
-    val Array(trainingData, testData) = df2.randomSplit(Array(0.8, 0.2))
+    val Array(trainingData, testData) = transformedDf.randomSplit(Array(0.8, 0.2))
 
     // Train a RandomForest model.
     val rf = new RandomForestRegressor()
@@ -62,7 +63,7 @@ object TrainingJob {
     val featureIndexer = new VectorIndexer()
       .setInputCol("features")
       .setOutputCol("indexedFeatures")
-      .fit(df2)
+      .fit(transformedDf)
 
     // Chain indexer and forest in a Pipeline.
     val pipeline = new Pipeline()

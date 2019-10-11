@@ -11,8 +11,12 @@ curl -v orion:1026/v2/subscriptions -s -S -H 'Content-Type: application/json' -d
 	"condition": {
   	"attrs": [
       "predictionId",
-      "socketId",
-      "predictionValue"
+      "predictionValue",
+      "year",
+      "month",
+      "day",
+      "time"
+
   	]
 	}
   },
@@ -22,8 +26,12 @@ curl -v orion:1026/v2/subscriptions -s -S -H 'Content-Type: application/json' -d
 	},
 	"attrs": [
       "predictionId",
-      "socketId",
-      "predictionValue"
+      "predictionValue",
+      "year",
+      "month",
+      "day",
+      "time"
+
 	]
   },
   "expires": "2040-01-01T14:00:00.00Z",

@@ -12,11 +12,15 @@ import org.apache.spark.sql.SparkSession
   * @author @sonsoleslp
   */
 
-case class PredictionResponse(socketId: String, predictionId: String, predictionValue: Int) {
+case class PredictionResponse(socketId: String, predictionId: String, predictionValue: Int, year: Int, month: Int, day: Int, time: Int) {
   override def toString :String = s"""{
   "socketId": { "value": "${socketId}", "type": "String"},
   "predictionId": { "value":"${predictionId}", "type": "String"},
-  "predictionValue": { "value":${predictionValue}, "type": "Integer"}
+  "predictionValue": { "value":${predictionValue}, "type": "Integer"},
+  "year": { "value":${year}, "type": "Integer"},
+  "month": { "value":${month}, "type": "Integer"},
+  "day": { "value":${day}, "type": "Integer"},
+  "time": { "value": "${time}", "type": "String"}
   }""".trim()
 }
 case class PredictionRequest(year: Int, month: Int, day: Int, weekDay: Int, time: Int, socketId: String, predictionId: String)
@@ -76,9 +80,17 @@ object PredictionJob {
           .transform(df)
         val predictions = model
           .transform(vectorizedFeatures)
-          .select("socketId", "predictionId", "prediction")
+          .select("socketId","predictionId", "prediction", "year", "month", "day", "time")
         predictions.toJavaRDD
-    }).map(pred=> PredictionResponse(pred.get(0).toString, pred.get(1).toString, pred.get(2).toString.toFloat.round))
+    })
+      .map(pred=> PredictionResponse(pred.get(0).toString,
+        pred.get(1).toString,
+        pred.get(2).toString.toFloat.round,
+        pred.get(3).toString.toInt,
+        pred.get(4).toString.toInt,
+        pred.get(5).toString.toInt,
+        pred.get(6).toString.toInt)
+    )
 
     // Convert the output to an OrionSinkObject and send to Context Broker
     val sinkDataStream = predictionDataStream
@@ -86,7 +98,7 @@ object PredictionJob {
 
     // Add Orion Sink
     OrionSink.addSink(sinkDataStream)
-
+    sinkDataStream.print()
     predictionDataStream.print()
     ssc.start()
     ssc.awaitTermination()

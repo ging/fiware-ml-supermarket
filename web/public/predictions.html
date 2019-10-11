@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>FIWARE Purchase volume prediction</title>
+	<script src="socket.io.js"></script>
+	<script src="jquery-1.10.1.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="bootstrap.min.css"></link>
+	<link rel="stylesheet" href="basic.css"></link>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+	<div class="container">
+		<img id="logo" src="fi-ware_logo.png">
+		<a href="/" style="float: right; margin: 10px;"><button class="btn btn-link" >Predict</button></a>
+		<br/><br/>
+		<h1>Prediction history</h1>
+		<br/>
+	  	<div class="row">
+	      <div class="col-12">
+		      <table class="table table-predictions">
+				<thead class="">
+				 <tr>
+				   <th scope="col">Date</th>
+				   <th scope="col">Time</th>
+				   <th scope="col"># Predicted Purchases</th>
+				 </tr>
+				</thead>
+				<tbody>
+				  
+				</tbody>
+		      </table>
+	      	</div>
+      	</div>
+	</div>
+	<br/><br/>
+	<script src="/db.js"></script>
+</body>
+
+</html>

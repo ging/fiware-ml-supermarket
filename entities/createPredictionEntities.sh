@@ -51,6 +51,22 @@ curl orion:1026/v2/entities -s -S -H 'Content-Type: application/json' -d @- <<EO
   "predictionValue":{
     "value": 0,
     "type": "Float"
+  },
+  "year":{
+    "value": 0,
+    "type": "Integer"
+  },
+  "month":{
+    "value": 0,
+    "type": "Integer"
+  },
+  "day":{
+    "value": 0,
+    "type": "Integer"
+  },
+  "time": {
+    "value": 0,
+    "type": "Integer"
   }
 }
 EOF

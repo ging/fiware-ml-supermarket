@@ -37,7 +37,6 @@ $(function () {
 	}
 
 	socket.on('messages', function(action) {
-		console.log(action);
 		try{
 			switch(action.type) {
 				case "CONFIRMATION":
@@ -47,7 +46,8 @@ $(function () {
 					renderAlert(action.payload.msg, "danger");
 					break;
 				case "PREDICTION":
-					if (predictionId === ( "p-" + action.payload.predictionId)) {
+				console.log(action.payload.predictionId,predictionId)
+					if (predictionId === (action.payload.predictionId)) {
 						renderResult(action.payload.predictionValue);
 					}
 					break;
@@ -103,16 +103,16 @@ $(function () {
     $("#newForm").on("submit", function () {
         const dateSubmitted = new Date($("#date").val());
         const time = parseInt($('#hourSelect').val());
-        predictionId = Date.now();
+        predictionId = "p-" + Date.now();
         const msg = {
         	year: dateSubmitted.getUTCFullYear(),
         	month: dateSubmitted.getUTCMonth()+1,
         	day: dateSubmitted.getUTCDate()+1,
         	weekDay: dateSubmitted.getDay(),
         	time: time,
-        	predictionId: "p-"+ predictionId
+        	predictionId: predictionId
         }
-        socket.emit("predict",msg)
+        socket.emit("predict", msg);
         return false;
     });
 });

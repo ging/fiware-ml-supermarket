@@ -6,9 +6,11 @@ services:
     command: --nojournal
     networks:
       - fiware
+    ports:
+      - "27017:27017"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
   orion:
     container_name: orion
     image: fiware/orion
@@ -32,7 +34,7 @@ services:
     command: bash -c "sh /entities/createPredictionEntities.sh && sh /entities/subscribeReqPredictionTicket.sh && sh /entities/subscribeResPredictionTicket.sh && npm start"
     environment:
       - URL_CB=http://orion:1026/v2/entities/ReqTicketPrediction1/attrs
-      - MONGO_URI=mongodb://root:example@mongo:27017/sth_test
+      - MONGO_URI=mongodb://root:example@mongo:27017/sth_test?authSource=admin
     volumes:
       - ./entities:/entities
   spark-master:

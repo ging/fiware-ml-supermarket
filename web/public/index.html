@@ -14,17 +14,25 @@
 </head>
 <body>
 	<div class="container">
-	<img id="logo" src="fi-ware_logo.png">
+		<img id="logo" src="fi-ware_logo.png">
+		<a href="/predictions.html" style="float: right; margin: 10px;"><button class="btn btn-link" >
+		<span class="fa fa-calendar"></span>Historic</button></a>
+		<br/>
+		<br/>
 		<h1>Predict the number of purchases</h1>
+		<br/>
 	  	<div class="row">
 	      <div class="col-6">
-	      		<h2>Date</h2>
-			  	<div id="datepicker"></div>	
+      		<h2>Date</h2>
+			<br/>
+		  	<div id="datepicker"></div>	
 	      </div>
 	      <div class="col-6">
 			<form id="newForm">
 			  <input type="hidden" name="date" id="date">
 			  <h2>Hour range</h2>
+				<br/>
+
 			  <div class="form-group">
 			      <select class="form-control" id="hourSelect">
 			        <option value="0">00:00-00:59</option>

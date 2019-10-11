@@ -112,3 +112,36 @@ body {
 #spinner {
     filter: saturate(0.25);
 }
+
+.table-predictions {
+    font-size: 21px;
+    color: #777;
+}
+
+.table-predictions thead{
+    color: var(--blue);
+    background-color: white;
+}
+.table-predictions thead th{
+    border-top: 2px solid white;
+}
+
+.prediction-value {
+    font-weight: 900;
+}
+
+.predictions-low {
+    color: var(--lightred);
+}
+
+.predictions-medium {
+    color: var(--brightorange);
+}
+
+.predictions-high {
+    color: var(--brightgreen);
+}
+
+.btn-link {
+    color: var(--blue);
+}
