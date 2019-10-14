@@ -26,7 +26,9 @@ $(function(){
 			var elements = $();
 			for(let x in predictions) {
 				let prediction = predictions[x];
-			    elements = elements.add(createElement(prediction));
+				if (prediction.year != 0) {
+			    	elements = elements.add(createElement(prediction));
+				}
 			}
 			$('tbody').append(elements);
 		});

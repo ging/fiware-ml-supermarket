@@ -20,7 +20,7 @@ case class PredictionResponse(socketId: String, predictionId: String, prediction
   "year": { "value":${year}, "type": "Integer"},
   "month": { "value":${month}, "type": "Integer"},
   "day": { "value":${day}, "type": "Integer"},
-  "time": { "value": "${time}", "type": "String"}
+  "time": { "value": "${time}", "type": "Integer"}
   }""".trim()
 }
 case class PredictionRequest(year: Int, month: Int, day: Int, weekDay: Int, time: Int, socketId: String, predictionId: String)
@@ -68,7 +68,7 @@ object PredictionJob {
         val weekDay = ent.attrs("weekDay").value.toString.toInt
         val socketId = ent.attrs("socketId").value.toString
         val predictionId = ent.attrs("predictionId").value.toString
-        PredictionRequest(year, month, day, time, weekDay, socketId, predictionId)
+        PredictionRequest(year, month, day, weekDay, time, socketId, predictionId)
       })
 
     // Feed each entity into the prediction model
@@ -81,6 +81,7 @@ object PredictionJob {
         val predictions = model
           .transform(vectorizedFeatures)
           .select("socketId","predictionId", "prediction", "year", "month", "day", "time")
+
         predictions.toJavaRDD
     })
       .map(pred=> PredictionResponse(pred.get(0).toString,

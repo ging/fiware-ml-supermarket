@@ -15,13 +15,13 @@ object TrainingJob {
   def train(): RandomForestRegressionModel = {
     val schema = StructType(
       Array(StructField("id", IntegerType),
-        StructField("date", StringType),
-        StructField("time", IntegerType),
-        StructField("items", IntegerType),
-        StructField("day", IntegerType),
-        StructField("month", IntegerType),
-        StructField("year", IntegerType),
-        StructField("weekDay", IntegerType)
+            StructField("date", StringType),
+            StructField("time", IntegerType),
+            StructField("items", IntegerType),
+            StructField("day", IntegerType),
+            StructField("month", IntegerType),
+            StructField("year", IntegerType),
+            StructField("weekDay", IntegerType)
       ))
 
     val spark = SparkSession
@@ -59,7 +59,7 @@ object TrainingJob {
       .setMaxDepth(30)
       .setMaxBins(32)
       .setNumTrees(100)
-//      .setFeaturesCol("indexedFeatures")
+
     val featureIndexer = new VectorIndexer()
       .setInputCol("features")
       .setOutputCol("indexedFeatures")
@@ -73,9 +73,6 @@ object TrainingJob {
     // Make predictions.
     val predictions = model.transform(testData)
 
-    // Select example rows to display.
-    predictions.select("prediction", "label", "features").show(5)
-
     // Select (prediction, true label) and compute test error.
     val evaluator = new RegressionEvaluator()
       .setLabelCol("label")
@@ -84,9 +81,7 @@ object TrainingJob {
     val rmse = evaluator.evaluate(predictions)
     println("Root Mean Squared Error (RMSE) on test data = " + rmse)
 
-
     val rfModel = model.stages(1).asInstanceOf[RandomForestRegressionModel]
-    println("Learned regression forest model:\n" + rfModel.toDebugString)
     rfModel
   }
 }
