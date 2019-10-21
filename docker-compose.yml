@@ -44,14 +44,14 @@ services:
       - "8080:8080"
       - "7077:7077"
       - "9001:9001"
-    depends_on:
-      - maven
+#    depends_on:
+#      - maven
     environment:
       - INIT_DAEMON_STEP=setup_spark
       - "constraint:node==spark-master"
     networks:
          - fiware
-    command: bash -c "sleep 8 && sh /prediction-job/run-spark-jobs.sh"
+    command: bash -c "sleep 12 && sh /prediction-job/run-spark-jobs.sh"
     volumes:
       - ./prediction-job:/prediction-job
 
@@ -65,7 +65,6 @@ services:
     environment:
       - "SPARK_MASTER=spark://spark-master:7077"
       - "constraint:node==spark-master"
-    command: sleep 8
     networks:
         - fiware
   maven:

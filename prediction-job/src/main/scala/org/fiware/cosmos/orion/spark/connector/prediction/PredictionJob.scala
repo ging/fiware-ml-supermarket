@@ -20,7 +20,7 @@ case class PredictionResponse(socketId: String, predictionId: String, prediction
   "year": { "value":${year}, "type": "Integer"},
   "month": { "value":${month}, "type": "Integer"},
   "day": { "value":${day}, "type": "Integer"},
-  "time": { "value": "${time}", "type": "Integer"}
+  "time": { "value": ${time}, "type": "Integer"}
   }""".trim()
 }
 case class PredictionRequest(year: Int, month: Int, day: Int, weekDay: Int, time: Int, socketId: String, predictionId: String)
@@ -47,7 +47,7 @@ object PredictionJob {
     //    val vectorAssemblerPath = "%s/models/numeric_vector_assembler.bin".format(BASE_PATH)
     //    val vectorAssembler = VectorAssembler.load(vectorAssemblerPath)
     val vectorAssembler = new VectorAssembler()
-      .setInputCols(Array("year", "month", "day", "time", "weekDay"))
+      .setInputCols(Array("year", "month", "day", "weekDay", "time"))
       .setOutputCol("features")
 
     // Load model
