@@ -1,9 +1,9 @@
-# fiware-global-summit-berlin-2019-ml
+# FIWARE Machine Learning - Supermarket example
 
 * Clone this project
 ```shell
-git clone https://github.com/sonsoleslp/fiware-global-summit-berlin-2019-ml
-cd fiware-global-summit-berlin-2019-ml
+git clone https://github.com/ging/fiware-ml-supermarket
+cd fiware-ml-supermarket
 ```
 
 * Run the whole scenario
